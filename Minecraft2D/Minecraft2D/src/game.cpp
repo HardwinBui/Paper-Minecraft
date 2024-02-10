@@ -1,6 +1,6 @@
 #include "game.h"
-#include "resource_manager.h"
-#include "sprite_renderer.h"
+#include "utils/resource_manager.h"
+#include "utils/sprite_renderer.h"
 
 SpriteRenderer *Renderer;
 
@@ -28,8 +28,10 @@ void Game::Init()
     Shader myShader = ResourceManager::GetShader("sprite");
     Renderer = new SpriteRenderer(myShader);    
     // load textures
-    ResourceManager::LoadTexture("textures/moom.png", true, "face");
-    //ResourceManager::LoadTexture("textures/dirt.jpg", true, "face");
+    ResourceManager::LoadTexture("textures/grass.jpg", true, "grass");
+    ResourceManager::LoadTexture("textures/dirt.jpg", true, "dirt");
+    ResourceManager::LoadTexture("textures/sand.jpeg", true, "sand");
+    ResourceManager::LoadTexture("textures/stone.png", true, "stone");
 }
 
 void Game::Update(float dt)
@@ -45,9 +47,21 @@ void Game::ProcessInput(float dt)
 	//}
 }
 
+void DrawBlock(std::string blockType, float x, float y)
+{
+    float blockSize = 40.f;
+    Texture2D texture = ResourceManager::GetTexture(blockType);
+    Renderer->DrawSprite(texture, glm::vec2(x*blockSize ,y*blockSize), glm::vec2(blockSize, blockSize));
+}
+
 void Game::Render()
 {
-    Texture2D texture = ResourceManager::GetTexture("face");
+    //Texture2D texture = ResourceManager::GetTexture("face");
     //Renderer->DrawSprite(texture, glm::vec2(200.0f, 200.0f), glm::vec2(300.0f, 400.0f), 45.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-    Renderer->DrawSprite(texture, glm::vec2(200.0f, 200.0f), glm::vec2(400.0f, 400.0f), 0.0f);
+    //Renderer->DrawSprite(texture, glm::vec2(200.0f, 200.0f), glm::vec2(40.0f, 40.0f), 0.0f);
+    DrawBlock("dirt", 0, 1);
+    DrawBlock("grass", 0, 0);
+
+    DrawBlock("stone", 0, 0);
+    DrawBlock("stone", 1, 0);
 }

@@ -9,8 +9,8 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
 // Screen resolution
-const unsigned int SCREEN_WIDTH = 800;
-const unsigned int SCREEN_HEIGHT = 600;
+const unsigned int SCREEN_WIDTH = 1280;
+const unsigned int SCREEN_HEIGHT = 720;
 
 // Game variable
 Game Minecraft(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -68,9 +68,10 @@ int main()
 		Minecraft.Update(deltaTime);
 
 		// rendering
+		glClearColor(0.f, 0.f, 0.f, 1.0f);
+		//glClearColor(0.4392156862745098f, 0.7764705882352941f, 1.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
 		Minecraft.Render();
-		//glClearColor(0.f, 0.f, 0.f, 1.0f);
-		//glClear(GL_COLOR_BUFFER_BIT);
 
 		// buffering
 		glfwSwapBuffers(window);
@@ -82,6 +83,9 @@ int main()
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
+	// when a user presses the escape key, we set the WindowShouldClose property to true, closing the application
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, true);
 	if (key >= 0 && key < 1024)
 	{
 		if (action == GLFW_PRESS)
