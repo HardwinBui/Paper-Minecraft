@@ -28,12 +28,12 @@ void Game::Init()
     Shader myShader = ResourceManager::GetShader("sprite");
     Renderer = new SpriteRenderer(myShader);    
     // load textures
-    ResourceManager::LoadTexture("textures/terrain.png", true, "face");
+    ResourceManager::LoadTexture("textures/moom.png", true, "face");
 }
 
 void Game::Update(float dt)
 {
-
+    Render();
 }
 
 void Game::ProcessInput(float dt)
