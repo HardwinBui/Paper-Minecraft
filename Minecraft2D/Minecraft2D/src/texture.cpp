@@ -1,5 +1,3 @@
-
-
 /*******************************************************************
 ** This code is part of Breakout.
 **
@@ -39,4 +37,3 @@ void Texture2D::Bind() const
 {
     glBindTexture(GL_TEXTURE_2D, this->ID);
 }
-
