@@ -29,7 +29,7 @@ void Game::Init()
     ResourceManager::GetShader("sprite").Use().SetInteger("image", 0);
     ResourceManager::GetShader("sprite").SetMatrix4("projection", projection);
     // camera/view transformation
-    camera = (glm::vec3(20.1f, 10.0f, 1.0f));
+    camera = (glm::vec3(20.1f, 10.0f, 0.0f));
     glm::mat4 view = camera.GetViewMatrix();
     ResourceManager::GetShader("sprite").SetMatrix4("view", view);
 
@@ -49,6 +49,7 @@ void Game::Update(float dt)
 {
     // update player movement
     // update camera movement
+    blockManager->UpdateCameraPosition(camera.GetXPosition(), camera.GetXPosition());
 }
 
 void Game::ProcessInput(float dt)
@@ -81,12 +82,12 @@ void Game::ProcessInput(float dt)
     }
 }
 
-void DrawBlock(std::string blockType, float x, float y)
-{
-    float blockSize = 40.f;
-    Texture2D texture = ResourceManager::GetTexture(blockType);
-    Renderer->DrawSprite(texture, glm::vec2(x*blockSize ,y*blockSize), glm::vec2(blockSize, blockSize));
-}
+//void DrawBlock(std::string blockType, float x, float y)
+//{
+//    float blockSize = 40.f;
+//    Texture2D texture = ResourceManager::GetTexture(blockType);
+//    Renderer->DrawSprite(texture, glm::vec2(x*blockSize ,y*blockSize), glm::vec2(blockSize, blockSize));
+//}
 
 void Game::Render()
 {

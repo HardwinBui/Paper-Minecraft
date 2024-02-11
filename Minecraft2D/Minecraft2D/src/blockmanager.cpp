@@ -7,19 +7,23 @@ BlockManager::BlockManager(SpriteRenderer *renderer)
 	{
 		blockDex[i] = new Block(i, blockNames[i]);
 	}
-
-	GenerateChunk(0);
-	GenerateChunk(1);
-	GenerateChunk(2);
 }
 
 void BlockManager::Render()
 {
-	// interate through desired chucks of blocks
+	int curChunk = 0;
+	// printf("%f\n", this->cameraX);
+	// roughly 1:40
+	curChunk = this->cameraX / 40.0f;
 
-	for (int x = 0; x < 20; x++)
+	GenerateChunk(curChunk);
+	GenerateChunk(curChunk-1);
+	GenerateChunk(curChunk+1);
+
+	// interate through desired chucks of blocks
+	for (int x = curChunk - chunkSize/2; x < curChunk + chunkSize; x++)
 	{
-		for (int y = 0; y < maxHeight; y++) 
+		for (int y = minHeight; y < maxHeight; y++) 
 		{
 			int blockID = 0;
 			/*if (this->blocks.find(std::pair<int, int>(x, y)) == this->blocks.end())
@@ -35,14 +39,18 @@ void BlockManager::Render()
 
 void BlockManager::GenerateChunk(int chunk)
 {
+	if (this->chunksGenerated.find(chunk) != this->chunksGenerated.end())
+		return;
+
 	int startPos = chunk * chunkSize;
 	for (int x = startPos; x < startPos + chunkSize; x++)
 	{
-		for (int y = 0; y < maxHeight; y++)
+		for (int y = minHeight; y < maxHeight; y++)
 		{
 			GenerateBlock(x, y);
 		}
 	}
+	this->chunksGenerated.insert(chunk);
 }
 
 void BlockManager::GenerateBlock(int x, int y)
@@ -50,12 +58,15 @@ void BlockManager::GenerateBlock(int x, int y)
 	int blockID;
 
 	// TODO: block logic here
-	if (y > 20) blockID = 0;
-	else blockID = 3;
+	if (y > 0) blockID = 3;
+	else blockID = 0;
 
 	std::pair<int, int> pos(x, y);
 	this->blocks.insert(std::pair<std::pair<int, int>, int>(pos, blockID));
+}
 
-	/*int test = this->blocks.find(std::pair<int, int>(x, y))->second;
-	printf("%d\n", test);*/
+void BlockManager::UpdateCameraPosition(float x, float y)
+{
+	this->cameraX = x;
+	this->cameraY = y;
 }

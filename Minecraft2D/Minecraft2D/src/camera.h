@@ -112,6 +112,16 @@ public:
             Zoom = 45.0f;
     }
 
+    float GetXPosition()
+    {
+        return Position.x;
+    }
+
+    float GetYPosition()
+    {
+        return Position.y;
+    }
+
 private:
     // calculates the front vector from the Camera's (updated) Euler Angles
     void updateCameraVectors()
