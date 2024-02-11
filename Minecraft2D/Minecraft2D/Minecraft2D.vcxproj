@@ -140,6 +140,7 @@
     <ClCompile Include="src\utils\glad.c" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\utils\perlin.cpp" />
     <ClCompile Include="src\utils\resource_manager.cpp" />
     <ClCompile Include="src\utils\shader.cpp" />
     <ClCompile Include="src\utils\sprite_renderer.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="src\camera.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\gameobject.h" />
+    <ClInclude Include="src\utils\perlin.h" />
     <ClInclude Include="src\utils\resource_manager.h" />
     <ClInclude Include="src\utils\shader.h" />
     <ClInclude Include="src\utils\sprite_renderer.h" />

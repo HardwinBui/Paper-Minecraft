@@ -3,10 +3,16 @@
 BlockManager::BlockManager(SpriteRenderer *renderer)
 {
 	this->Renderer = renderer;
+	this->perlin = new Perlin(20,100,5,12345);
+	this->cameraX = 0;
+	this->cameraY = 0;
 	for (int i = 0; i < sizeof(blockNames)/sizeof(blockNames[0]); i++)
 	{
 		blockDex[i] = new Block(i, blockNames[i]);
 	}
+
+	for (int i = 0; i < 20; i++)
+		printf(" % f\n", perlin->Get(i,0));
 }
 
 void BlockManager::Render()
@@ -55,11 +61,16 @@ void BlockManager::GenerateChunk(int chunk)
 
 void BlockManager::GenerateBlock(int x, int y)
 {
-	int blockID;
+	int blockID = 0;
 
 	// TODO: block logic here
-	if (y > 0) blockID = 3;
-	else blockID = 0;
+	float noise = perlin->Get(x, y);
+	if (noise > 0.5f)
+		blockID = 3;
+	else blockID = 2;
+
+	/*if (y > 0) blockID = 3;
+	else blockID = 0;*/
 
 	std::pair<int, int> pos(x, y);
 	this->blocks.insert(std::pair<std::pair<int, int>, int>(pos, blockID));

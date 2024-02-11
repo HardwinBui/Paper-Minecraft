@@ -15,6 +15,7 @@
 #include "utils/sprite_renderer.h"
 #include "block.h"
 #include <unordered_set>
+#include "utils/perlin.h"
 
 const int chunkSize = 50;
 const int maxHeight = 64;
@@ -35,11 +36,13 @@ public:
     void Render();
 
 private:
+
     SpriteRenderer* Renderer;
     Block *blockDex[5];
     std::map<std::pair<int, int>, int> blocks;
     std::unordered_set<int> chunksGenerated;
     float cameraX, cameraY;
+    Perlin *perlin;
 
     void GenerateChunk(int chunk); // add more blocks into the map
     void GenerateBlock(int x, int y);
