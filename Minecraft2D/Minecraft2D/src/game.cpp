@@ -1,6 +1,7 @@
 #include "game.h"
 #include "utils/resource_manager.h"
 #include "utils/sprite_renderer.h"
+#include "camera.h"
 
 SpriteRenderer *Renderer;
 
@@ -24,6 +25,19 @@ void Game::Init()
         static_cast<float>(this->Height), 0.0f, -1.0f, 1.0f);
     ResourceManager::GetShader("sprite").Use().SetInteger("image", 0);
     ResourceManager::GetShader("sprite").SetMatrix4("projection", projection);
+
+
+    // pass projection matrix to shader (note that in this case it could change every frame)
+    /*glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    ourShader.setMat4("projection", projection);*/
+
+    // camera/view transformation
+    Camera camera(glm::vec3(20.1f, 10.0f, 1.0f));
+    glm::mat4 view = camera.GetViewMatrix();
+    //ourShader.setMat4("view", view);
+    ResourceManager::GetShader("sprite").SetMatrix4("view", view);
+
+    
     // set render-specific controls
     Shader myShader = ResourceManager::GetShader("sprite");
     Renderer = new SpriteRenderer(myShader);    
@@ -36,7 +50,8 @@ void Game::Init()
 
 void Game::Update(float dt)
 {
-
+    // update player movement
+    // update camera movement
 }
 
 void Game::ProcessInput(float dt)

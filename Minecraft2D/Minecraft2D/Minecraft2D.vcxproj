@@ -134,6 +134,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\gameobject.cpp" />
     <ClCompile Include="src\utils\glad.c" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\game.cpp" />
@@ -143,7 +144,9 @@
     <ClCompile Include="src\utils\texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\camera.h" />
     <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\gameobject.h" />
     <ClInclude Include="src\utils\resource_manager.h" />
     <ClInclude Include="src\utils\shader.h" />
     <ClInclude Include="src\utils\sprite_renderer.h" />
