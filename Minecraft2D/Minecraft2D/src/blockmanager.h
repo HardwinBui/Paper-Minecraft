@@ -21,6 +21,8 @@ const int chunkSize = 50;
 const int maxHeight = 50;// 64;
 const int minHeight = -5;//-64;
 const int waterLevel = 14;
+const int coalHeight = 23;
+
 const std::string blockNames[8] = {
     "air",
     "grass",

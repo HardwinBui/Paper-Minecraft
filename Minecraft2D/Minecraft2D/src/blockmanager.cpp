@@ -90,16 +90,30 @@ void BlockManager::DecorateChunk(int chunk)
 
 		for (int y = minHeight; y < maxHeight; y++)
 		{
+			// spawn ores
 			if (curDepth > depth && foundSurface)
 			{
-				break;
+				float abundance = 3;
+				float noise = this->perlin->PerlinNoise(x*abundance, y*abundance);
+				if (noise > 0.6f && y < coalHeight)
+				{
+					std::pair<int, int> pos(x, y);
+					this->blocks[pos] = 7;
+				}
+				else if (noise < 0.3f)
+				{
+					std::pair<int, int> pos(x, y);
+					this->blocks[pos] = 6;
+				}
 			}
+			// spawn dirt
 			else if (foundSurface)
 			{
 				std::pair<int, int> pos(x, y);
 				this->blocks[pos] = 2;
 				curDepth += 1;
 			}
+			// spawn grass or sand (based on water height)
 			else if (this->blocks.find(std::pair<int, int>(x, y))->second != 0)
 			{	
 				std::pair<int, int> pos(x, y);
