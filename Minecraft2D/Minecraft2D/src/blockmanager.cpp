@@ -3,23 +3,19 @@
 BlockManager::BlockManager(SpriteRenderer *renderer)
 {
 	this->Renderer = renderer;
-	this->perlin = new Perlin(20,100,5,12345);
 	this->cameraX = 0;
 	this->cameraY = 0;
 	for (int i = 0; i < sizeof(blockNames)/sizeof(blockNames[0]); i++)
 	{
 		blockDex[i] = new Block(i, blockNames[i]);
 	}
-
-	for (int i = 0; i < 20; i++)
-		printf(" % f\n", perlin->Get(i,0));
+	this->perlin = new Perlin();
 }
 
 void BlockManager::Render()
 {
 	int curChunk = 0;
-	// printf("%f\n", this->cameraX);
-	// roughly 1:40
+	// 1:40 ratio for distance:camera
 	curChunk = this->cameraX / 40.0f;
 
 	GenerateChunk(curChunk);
@@ -32,15 +28,22 @@ void BlockManager::Render()
 		for (int y = minHeight; y < maxHeight; y++) 
 		{
 			int blockID = 0;
-			/*if (this->blocks.find(std::pair<int, int>(x, y)) == this->blocks.end())
+			blockID = this->blocks[std::pair<int, int>(x, y)];
+			// display water
+			if (blockID == 0 && y > waterLevel)
 			{
-				GenerateChunk(x % chunkSize);
-			}*/
-			blockID = this->blocks.find(std::pair<int,int>(x, y))->second;
+				blockID = 5;
+			}
 
 			blockDex[blockID]->Render(this->Renderer, x, y);
 		}
 	}
+}
+
+void BlockManager::UpdateCameraPosition(float x, float y)
+{
+	this->cameraX = x;
+	this->cameraY = y;
 }
 
 void BlockManager::GenerateChunk(int chunk)
@@ -57,27 +60,52 @@ void BlockManager::GenerateChunk(int chunk)
 		}
 	}
 	this->chunksGenerated.insert(chunk);
+	DecorateChunk(chunk);
 }
 
 void BlockManager::GenerateBlock(int x, int y)
 {
 	int blockID = 0;
 
-	// TODO: block logic here
-	float noise = perlin->Get(x, y);
-	if (noise > 0.5f)
-		blockID = 3;
-	else blockID = 2;
-
-	/*if (y > 0) blockID = 3;
-	else blockID = 0;*/
+	// Get perlin noise to determine height of terrain in column
+	float noise = this->perlin->PerlinNoise(x, y);
+	float modifier = 0.25f;
+	float amplitude = 7;
+	if (y * modifier < noise * amplitude)
+		blockID = 0;
+	else blockID = 3;
 
 	std::pair<int, int> pos(x, y);
-	this->blocks.insert(std::pair<std::pair<int, int>, int>(pos, blockID));
+	this->blocks[pos] = blockID;
 }
 
-void BlockManager::UpdateCameraPosition(float x, float y)
+void BlockManager::DecorateChunk(int chunk)
 {
-	this->cameraX = x;
-	this->cameraY = y;
+	int startPos = chunk * chunkSize;
+	for (int x = startPos; x < startPos + chunkSize; x++)
+	{
+		bool foundSurface = false;
+		int depth = 3 - (rand() % 3);
+		int curDepth = 0;
+
+		for (int y = minHeight; y < maxHeight; y++)
+		{
+			if (curDepth > depth && foundSurface)
+			{
+				break;
+			}
+			else if (foundSurface)
+			{
+				std::pair<int, int> pos(x, y);
+				this->blocks[pos] = 2;
+				curDepth += 1;
+			}
+			else if (this->blocks.find(std::pair<int, int>(x, y))->second != 0)
+			{	
+				std::pair<int, int> pos(x, y);
+				this->blocks[pos] = y > waterLevel+1 ? 4 : 1;				
+				foundSurface = true;
+			}
+		}
+	}
 }

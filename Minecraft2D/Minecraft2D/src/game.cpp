@@ -41,6 +41,9 @@ void Game::Init()
     ResourceManager::LoadTexture("textures/dirt.jpg", true, "dirt");
     ResourceManager::LoadTexture("textures/sand.jpeg", true, "sand");
     ResourceManager::LoadTexture("textures/stone.png", true, "stone");
+    ResourceManager::LoadTexture("textures/water.png", true, "water");
+    ResourceManager::LoadTexture("textures/iron.png", true, "iron");
+    ResourceManager::LoadTexture("textures/coal.png", true, "coal");
 
     blockManager = new BlockManager(Renderer);
 }
@@ -54,11 +57,6 @@ void Game::Update(float dt)
 
 void Game::ProcessInput(float dt)
 {
-	//if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-	//{
-	//	// Do something here
-	//}
-
     if (this->Keys[GLFW_KEY_A]){
         camera.ProcessKeyboard(LEFT, dt);
         glm::mat4 view = camera.GetViewMatrix();
@@ -82,23 +80,7 @@ void Game::ProcessInput(float dt)
     }
 }
 
-//void DrawBlock(std::string blockType, float x, float y)
-//{
-//    float blockSize = 40.f;
-//    Texture2D texture = ResourceManager::GetTexture(blockType);
-//    Renderer->DrawSprite(texture, glm::vec2(x*blockSize ,y*blockSize), glm::vec2(blockSize, blockSize));
-//}
-
 void Game::Render()
 {
-    //Texture2D texture = ResourceManager::GetTexture("face");
-    //Renderer->DrawSprite(texture, glm::vec2(200.0f, 200.0f), glm::vec2(300.0f, 400.0f), 45.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-    //Renderer->DrawSprite(texture, glm::vec2(200.0f, 200.0f), glm::vec2(40.0f, 40.0f), 0.0f);
-    
-    /*DrawBlock("dirt", 0, 1);
-    DrawBlock("grass", 0, 0);
-    DrawBlock("stone", 0, 0);
-    DrawBlock("stone", 1, 0);*/
-
     blockManager->Render();
 }

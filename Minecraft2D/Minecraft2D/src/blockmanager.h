@@ -18,14 +18,18 @@
 #include "utils/perlin.h"
 
 const int chunkSize = 50;
-const int maxHeight = 64;
-const int minHeight = -64;
-const std::string blockNames[5] = {
+const int maxHeight = 50;// 64;
+const int minHeight = -5;//-64;
+const int waterLevel = 14;
+const std::string blockNames[8] = {
     "air",
     "grass",
     "dirt",
     "stone",
     "sand",
+    "water",
+    "iron",
+    "coal",
 };
 
 class BlockManager
@@ -38,14 +42,15 @@ public:
 private:
 
     SpriteRenderer* Renderer;
-    Block *blockDex[5];
+    Perlin* perlin;
+    Block *blockDex[sizeof(blockNames) / sizeof(blockNames[0])];
     std::map<std::pair<int, int>, int> blocks;
     std::unordered_set<int> chunksGenerated;
     float cameraX, cameraY;
-    Perlin *perlin;
 
     void GenerateChunk(int chunk); // add more blocks into the map
     void GenerateBlock(int x, int y);
+    void DecorateChunk(int chunk);
 
 };
 

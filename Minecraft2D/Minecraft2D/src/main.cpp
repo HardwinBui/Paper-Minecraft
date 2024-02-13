@@ -68,8 +68,8 @@ int main()
 		Minecraft.Update(deltaTime);
 
 		// rendering
-		glClearColor(0.f, 0.f, 0.f, 1.0f);
-		//glClearColor(0.4392156862745098f, 0.7764705882352941f, 1.0f, 1.0f);
+		//glClearColor(0.f, 0.f, 0.f, 1.0f);
+		glClearColor(0.4392156862745098f, 0.7764705882352941f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		Minecraft.Render();
 
