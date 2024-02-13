@@ -44,6 +44,9 @@ void Game::Init()
     ResourceManager::LoadTexture("textures/water.png", true, "water");
     ResourceManager::LoadTexture("textures/iron.png", true, "iron");
     ResourceManager::LoadTexture("textures/coal.png", true, "coal");
+    ResourceManager::LoadTexture("textures/diamond.png", true, "diamond");
+    ResourceManager::LoadTexture("textures/bedrock.png", true, "bedrock");
+    ResourceManager::LoadTexture("textures/sky.png", true, "sky");
 
     blockManager = new BlockManager(Renderer);
 }
@@ -82,5 +85,7 @@ void Game::ProcessInput(float dt)
 
 void Game::Render()
 {
+    Texture2D texture = ResourceManager::GetTexture("sky");
+    Renderer->DrawSprite(texture, glm::vec2(camera.GetXPosition(), 0), glm::vec2(Width, Height));
     blockManager->Render();
 }

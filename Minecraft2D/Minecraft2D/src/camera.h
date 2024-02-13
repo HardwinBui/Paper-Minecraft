@@ -22,6 +22,8 @@ const float SPEED = 200.5f;
 const float SENSITIVITY = 0.1f;
 const float ZOOM = 45.0f;
 
+const float MAX_HEIGHT = 10;
+const float MIN_HEIGHT = 1800;
 
 // An abstract camera class that processes input and calculates the corresponding Euler Angles, Vectors and Matrices for use in OpenGL
 class Camera
@@ -78,6 +80,9 @@ public:
             Position -= Right * velocity;
         if (direction == RIGHT)
             Position += Right * velocity;
+
+        Position.y = std::max(Position.y, MAX_HEIGHT);
+        Position.y = std::min(Position.y, MIN_HEIGHT);
     }
 
     // processes input received from a mouse input system. Expects the offset value in both the x and y direction.

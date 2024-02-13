@@ -15,8 +15,7 @@ BlockManager::BlockManager(SpriteRenderer *renderer)
 void BlockManager::Render()
 {
 	int curChunk = 0;
-	// 1:40 ratio for distance:camera
-	curChunk = this->cameraX / 40.0f;
+	curChunk = this->cameraX / blockSize;
 
 	GenerateChunk(curChunk);
 	GenerateChunk(curChunk-1);
@@ -103,8 +102,28 @@ void BlockManager::DecorateChunk(int chunk)
 				else if (noise < 0.3f)
 				{
 					std::pair<int, int> pos(x, y);
-					this->blocks[pos] = 6;
+					this->blocks[pos] = y >= diamondHeight ? 8 : 6;
 				}
+
+				// BEDROCK
+				if (y > bedrockHeight)
+				{
+					float scale = 10.f;
+					float bedNoise = this->perlin->PerlinNoise(x * scale, y * scale);
+
+					std::pair<int, int> pos(x, y);
+					this->blocks[pos] = bedNoise > 0.4f ? 9 : 3;
+				}
+
+				// CAVES
+				/*float scale = 0.5f;
+				float caveNoise = this->perlin->PerlinNoise(x * scale, y * scale);
+				if (y > caveHeight && noise > 0.35f && noise < 0.5f)
+				{
+					std::pair<int, int> pos(x, y);
+					if(this->blocks[pos] == 3)
+						this->blocks[pos] = 0;
+				}*/
 			}
 			// spawn dirt
 			else if (foundSurface)

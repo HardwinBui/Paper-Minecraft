@@ -22,8 +22,11 @@ const int maxHeight = 50;// 64;
 const int minHeight = -5;//-64;
 const int waterLevel = 14;
 const int coalHeight = 23;
+const int diamondHeight = 35;
+const int bedrockHeight = 45;
+const int caveHeight = 20;
 
-const std::string blockNames[8] = {
+const std::string blockNames[10] = {
     "air",
     "grass",
     "dirt",
@@ -32,6 +35,8 @@ const std::string blockNames[8] = {
     "water",
     "iron",
     "coal",
+    "diamond",
+    "bedrock",
 };
 
 class BlockManager
