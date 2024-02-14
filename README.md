@@ -5,7 +5,7 @@ Paper Minecraft is a simplified 2D version of Minecraft that I developed in C++ 
 Some of the features I implemented include:
 - terrain generation using perlin noise
 - displaying sprites and changing the camera view using GLSL
-- updating images to be draw on the window
+- updating images to be drawn on the window
 
 This project is based on [LearningOpenGL Breakout game tutorial](https://learnopengl.com/In-Practice/2D-Game/Breakout).  
 
