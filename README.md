@@ -8,6 +8,7 @@ Some of the features I implemented include:
 - updating images to be draw on the window
 
 <h2>Screenshots</h2>
+
 ![mc5](https://github.com/HardwinBui/Paper-Minecraft/assets/27057402/1ce91e0e-4e90-48a2-a5d7-06a1299dfe9b)
 
 ![mc1](https://github.com/HardwinBui/Paper-Minecraft/assets/27057402/08d0ede5-9617-4f91-a133-3f6eb10f7592)
