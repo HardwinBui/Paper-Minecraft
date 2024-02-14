@@ -7,6 +7,8 @@ Some of the features I implemented include:
 - displaying sprites and changing the camera view using GLSL
 - updating images to be draw on the window
 
+This project is based on [LearningOpenGL Breakout game tutorial](https://learnopengl.com/In-Practice/2D-Game/Breakout).  
+
 <h2>Screenshots</h2>
 
 ![mc5](https://github.com/HardwinBui/Paper-Minecraft/assets/27057402/1ce91e0e-4e90-48a2-a5d7-06a1299dfe9b)
